@@ -1,0 +1,19 @@
+{
+    "name": "pixicompose",
+    "version": "0.1.0",
+    "description": "Declarative UI framework for PixiJS inspired by SwiftUI and Jetpack Compose.",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "dev": "ts-node examples/basic.ts"
+    },
+    "dependencies": {
+        "pixi.js": "^8.14.0"
+    },
+    "devDependencies": {
+        "typescript": "^5.4.0",
+        "ts-node": "^10.9.1"
+    },
+    "license": "MIT"
+}
