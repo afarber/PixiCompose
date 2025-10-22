@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixiCompose Basic Example</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+    <script type="module">
+        import * as PIXI from '../node_modules/pixi.js/dist/pixi.mjs';
+        import { compose } from '../dist/core/compose.js';
+        import { h } from '../dist/core/vnode.js';
+        import { Container } from '../dist/components/Container.js';
+        import { Text } from '../dist/components/Text.js';
+        import { Button } from '../dist/components/Button.js';
+
+        const app = new PIXI.Application();
+        await app.init({ width: 800, height: 600 });
+        document.body.appendChild(app.canvas);
+
+        compose(
+            () =>
+                h(
+                    Container,
+                    {},
+                    h(Text, { text: 'Hello PixiCompose!', x: 100, y: 100 }),
+                    h(Button, {
+                        text: 'Click me',
+                        x: 100,
+                        y: 160,
+                        onClick: () => alert('Clicked!'),
+                    })
+                ),
+            app
+        );
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixiCompose Layout Example</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+    <script type="module">
+        import * as PIXI from '../node_modules/pixi.js/dist/pixi.mjs';
+        import { compose } from '../dist/core/compose.js';
+        import { h } from '../dist/core/vnode.js';
+        import { VerticalList } from '../dist/components/VerticalList.js';
+        import { HorizontalList } from '../dist/components/HorizontalList.js';
+        import { Grid } from '../dist/components/Grid.js';
+        import { Text } from '../dist/components/Text.js';
+        import { Drawer } from '../dist/components/Drawer.js';
+
+        const app = new PIXI.Application();
+        await app.init({ width: 800, height: 600 });
+        document.body.appendChild(app.canvas);
+
+        compose(
+            () =>
+                h(
+                    'Container',
+                    {},
+                    h(
+                        VerticalList,
+                        { x: 50, y: 50, spacing: 20 },
+                        h(Text, { text: 'Item 1' }),
+                        h(Text, { text: 'Item 2' }),
+                        h(Text, { text: 'Item 3' })
+                    ),
+                    h(
+                        HorizontalList,
+                        { x: 300, y: 50, spacing: 15 },
+                        h(Text, { text: 'A' }),
+                        h(Text, { text: 'B' }),
+                        h(Text, { text: 'C' })
+                    ),
+                    h(
+                        Grid,
+                        { x: 50, y: 250, columns: 3, spacing: 20 },
+                        h(Text, { text: '1' }),
+                        h(Text, { text: '2' }),
+                        h(Text, { text: '3' }),
+                        h(Text, { text: '4' }),
+                        h(Text, { text: '5' }),
+                        h(Text, { text: '6' })
+                    ),
+                    h(
+                        Drawer,
+                        { side: 'left', isOpen: true },
+                        h(Text, { text: 'Drawer content' })
+                    )
+                ),
+            app
+        );
+    </script>
+</body>
+</html>

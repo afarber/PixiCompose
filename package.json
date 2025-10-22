@@ -6,14 +6,22 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "build": "tsc",
-        "dev": "ts-node examples/basic.ts"
+        "dev": "npm run build && http-server . -p 8080 -o examples/basic.html",
+        "dev:layout": "npm run build && http-server . -p 8080 -o examples/layout.html",
+        "lint": "eslint src examples",
+        "lint:fix": "eslint src examples --fix",
+        "typecheck": "tsc --noEmit"
     },
     "dependencies": {
         "pixi.js": "^8.14.0"
     },
     "devDependencies": {
         "typescript": "^5.4.0",
-        "ts-node": "^10.9.1"
+        "ts-node": "^10.9.1",
+        "http-server": "^14.1.1",
+        "eslint": "^9.0.0",
+        "@typescript-eslint/parser": "^8.0.0",
+        "@typescript-eslint/eslint-plugin": "^8.0.0"
     },
     "license": "MIT"
 }

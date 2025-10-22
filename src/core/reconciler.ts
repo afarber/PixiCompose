@@ -11,43 +11,47 @@ export function render(vnode: VNode): any {
     let el: any;
 
     switch (type) {
-        case 'Drawer':
-            el = createDrawer(props, children);
-            break;
+    case 'Drawer':
+        el = createDrawer(props, children);
+        break;
 
-        case 'Container':
-            el = new PIXI.Container();
-            break;
+    case 'Container':
+        el = new PIXI.Container();
+        break;
 
-        case 'Text':
-            el = new PIXI.Text(props.text || '', props.style || {});
-            break;
+    case 'Text':
+        el = new PIXI.Text(props.text || '', props.style || {});
+        break;
 
-        case 'Button':
-            el = new PIXI.Container();
-            const label = new PIXI.Text(
-                props.text || 'Button',
-                props.style || {}
-            );
-            label.eventMode = 'static';
-            label.on('pointerdown', props.onClick);
-            el.addChild(label);
-            break;
+    case 'Button':
+        el = new PIXI.Container();
+        const label = new PIXI.Text(
+            props.text || 'Button',
+            props.style || {}
+        );
+        label.eventMode = 'static';
+        label.on('pointerdown', props.onClick);
+        el.addChild(label);
+        break;
 
-        case 'VerticalList':
-            el = layoutList(children, props, 'vertical');
-            break;
+    case 'Sprite':
+        el = PIXI.Sprite.from(props.texture || props.src || '');
+        break;
 
-        case 'HorizontalList':
-            el = layoutList(children, props, 'horizontal');
-            break;
+    case 'VerticalList':
+        el = layoutList(children, props, 'vertical');
+        break;
 
-        case 'Grid':
-            el = layoutGrid(children, props);
-            break;
+    case 'HorizontalList':
+        el = layoutList(children, props, 'horizontal');
+        break;
 
-        default:
-            throw new Error('Unknown element: ' + type);
+    case 'Grid':
+        el = layoutGrid(children, props);
+        break;
+
+    default:
+        throw new Error('Unknown element: ' + type);
     }
 
     if ('x' in props) el.x = props.x;
@@ -114,17 +118,17 @@ function createDrawer(props: any, children: any[]) {
     const size = props.size ?? 200;
 
     switch (side) {
-        case 'right':
-            panel.x = 800 - size;
-            break;
-        case 'top':
-            panel.y = 0;
-            break;
-        case 'bottom':
-            panel.y = 600 - size;
-            break;
-        default:
-            panel.x = 0; // left
+    case 'right':
+        panel.x = 800 - size;
+        break;
+    case 'top':
+        panel.y = 0;
+        break;
+    case 'bottom':
+        panel.y = 600 - size;
+        break;
+    default:
+        panel.x = 0; // left
     }
 
     if (props.isOpen) {
