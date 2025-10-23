@@ -1,4 +1,5 @@
-import { VNode } from './vnode';
+import { VNode } from './vnode.js';
+import * as PIXI from 'pixi.js';
 
 export function render(vnode: VNode): any {
     if (typeof vnode.type === 'function') {
@@ -6,7 +7,6 @@ export function render(vnode: VNode): any {
     }
 
     const { type, props = {}, children = [] } = vnode;
-    const PIXI = require('pixi.js');
 
     let el: any;
 
@@ -65,7 +65,6 @@ function layoutList(
     props: any,
     direction: 'vertical' | 'horizontal'
 ) {
-    const PIXI = require('pixi.js');
     const container = new PIXI.Container();
     const spacing = props.spacing ?? 10;
 
@@ -85,7 +84,6 @@ function layoutList(
 }
 
 function layoutGrid(children: any[], props: any) {
-    const PIXI = require('pixi.js');
     const container = new PIXI.Container();
     const { columns = 2, spacing = 10 } = props;
 
@@ -102,7 +100,6 @@ function layoutGrid(children: any[], props: any) {
 }
 
 function createDrawer(props: any, children: any[]) {
-    const PIXI = require('pixi.js');
     const container = new PIXI.Container();
 
     const backdrop = new PIXI.Graphics();

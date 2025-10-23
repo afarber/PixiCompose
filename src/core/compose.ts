@@ -1,5 +1,5 @@
-import { VNode } from './vnode';
-import { render } from './reconciler';
+import { VNode } from './vnode.js';
+import { render } from './reconciler.js';
 
 export function compose(root: () => VNode, app: any) {
     const tree = root();

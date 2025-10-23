@@ -1,4 +1,4 @@
-import { h } from '../core/vnode';
+import { h } from '../core/vnode.js';
 
 export interface HorizontalListProps {
     spacing?: number;

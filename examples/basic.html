@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PixiCompose Basic Example</title>
+    <script type="importmap">
+    {
+        "imports": {
+            "pixi.js": "../node_modules/pixi.js/dist/pixi.mjs"
+        }
+    }
+    </script>
     <style>
         body {
             margin: 0;
@@ -15,7 +22,7 @@
 </head>
 <body>
     <script type="module">
-        import * as PIXI from '../node_modules/pixi.js/dist/pixi.mjs';
+        import * as PIXI from 'pixi.js';
         import { compose } from '../dist/core/compose.js';
         import { h } from '../dist/core/vnode.js';
         import { Container } from '../dist/components/Container.js';
