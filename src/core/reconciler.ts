@@ -23,14 +23,22 @@ export function render(vnode: VNode): any {
         break;
 
     case 'Text':
-        el = new PIXI.Text({ text: props.text || '', style: props.style || {} });
+        const textStyle = props.style || {};
+        if (!textStyle.fill) {
+            textStyle.fill = 0xFFFFFF; // Default to white text
+        }
+        el = new PIXI.Text({ text: props.text || '', style: textStyle });
         break;
 
     case 'Button':
         el = new PIXI.Container();
+        const buttonStyle = props.style || {};
+        if (!buttonStyle.fill) {
+            buttonStyle.fill = 0xFFFFFF; // Default to white text
+        }
         const label = new PIXI.Text({
             text: props.text || 'Button',
-            style: props.style || {}
+            style: buttonStyle
         });
         label.eventMode = 'static';
         label.on('pointerdown', props.onClick);

@@ -16,6 +16,7 @@ The goal is to bring modern declarative UI design principles to the PixiJS ecosy
 -   Composable functional API (inspired by SwiftUI and Jetpack Compose)
 -   TypeScript-first design for type safety and strong typing
 -   Simple to integrate with existing PixiJS projects
+-   Full support for PixiJS v8
 -   Planned support for reactive state and animations
 
 ---
