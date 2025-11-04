@@ -117,9 +117,8 @@ function createDrawer(props: any, children: any[]) {
     const container = new PIXI.Container();
 
     const backdrop = new PIXI.Graphics();
-    backdrop.beginFill(0x000000, props.backdropAlpha ?? 0.5);
-    backdrop.drawRect(0, 0, 800, 600); // TODO: dynamic sizing later
-    backdrop.endFill();
+    backdrop.rect(0, 0, 800, 600); // TODO: dynamic sizing later
+    backdrop.fill({ color: 0x000000, alpha: props.backdropAlpha ?? 0.5 });
 
     const panel = new PIXI.Container();
     const content = children.map((c: any) => render(c));
