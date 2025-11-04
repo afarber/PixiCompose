@@ -23,15 +23,15 @@ export function render(vnode: VNode): any {
         break;
 
     case 'Text':
-        el = new PIXI.Text(props.text || '', props.style || {});
+        el = new PIXI.Text({ text: props.text || '', style: props.style || {} });
         break;
 
     case 'Button':
         el = new PIXI.Container();
-        const label = new PIXI.Text(
-            props.text || 'Button',
-            props.style || {}
-        );
+        const label = new PIXI.Text({
+            text: props.text || 'Button',
+            style: props.style || {}
+        });
         label.eventMode = 'static';
         label.on('pointerdown', props.onClick);
         el.addChild(label);
