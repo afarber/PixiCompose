@@ -47,6 +47,21 @@ npm install
 npm run build
 ```
 
+To run the examples:
+
+```bash
+npm run dev          # Opens basic.html example in your browser
+npm run dev:layout   # Opens layout.html example in your browser
+```
+
+To run linting and type checking:
+
+```bash
+npm run lint         # Check code style
+npm run lint:fix     # Auto-fix code style issues
+npm run typecheck    # Run TypeScript type checking
+```
+
 ## Built-in Components
 
 PixiCompose currently includes the following foundational UI components:

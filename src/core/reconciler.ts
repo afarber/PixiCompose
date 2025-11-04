@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js';
 
 export function render(vnode: VNode): any {
     if (typeof vnode.type === 'function') {
-        return render((vnode.type as Function)(vnode.props || {}));
+        return render((vnode.type as Function)(vnode.props || {}, ...(vnode.children || [])));
     }
 
     const { type, props = {}, children = [] } = vnode;
@@ -17,6 +17,9 @@ export function render(vnode: VNode): any {
 
     case 'Container':
         el = new PIXI.Container();
+        for (const child of children) {
+            el.addChild(render(child));
+        }
         break;
 
     case 'Text':
@@ -36,6 +39,9 @@ export function render(vnode: VNode): any {
 
     case 'Sprite':
         el = PIXI.Sprite.from(props.texture || props.src || '');
+        for (const child of children) {
+            el.addChild(render(child));
+        }
         break;
 
     case 'VerticalList':
