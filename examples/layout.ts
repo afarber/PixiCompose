@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2025 Alexander Farber
+ * SPDX-License-Identifier: MIT
+ *
+ * This file is part of the PixiCompose project (https://github.com/afarber/PixiCompose)
+ */
+
 import * as PIXI from 'pixi.js';
 import { compose } from '../src/core/compose';
 import { h } from '../src/core/vnode';

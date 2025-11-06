@@ -1,0 +1,19 @@
+echo "Running pre-commit checks..."
+echo ""
+
+# Check copyright headers
+echo "1. Checking copyright headers..."
+bash ./scripts/check-copyright.sh || exit 1
+echo ""
+
+# Run lint-staged for linting and formatting
+echo "2. Checking code style..."
+npx lint-staged || exit 1
+echo ""
+
+# Type check
+echo "3. Checking TypeScript types..."
+bash ./scripts/check-typecheck.sh || exit 1
+echo ""
+
+echo "All pre-commit checks passed!"

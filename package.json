@@ -1,30 +1,44 @@
 {
-    "name": "pixicompose",
-    "version": "0.1.0",
-    "description": "Declarative UI framework for PixiJS inspired by SwiftUI and Jetpack Compose.",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "scripts": {
-        "build": "tsc",
-        "dev": "npm run build && http-server . -p 8080 -o examples/basic.html",
-        "dev:layout": "npm run build && http-server . -p 8080 -o examples/layout.html",
-        "dev:button": "npm run build && http-server . -p 8080 -o examples/button.html",
-        "lint": "eslint src examples",
-        "lint:fix": "eslint src examples --fix",
-        "typecheck": "tsc --noEmit"
-    },
-    "dependencies": {
-        "pixi.js": "^8.14.0"
-    },
-    "devDependencies": {
-        "@typescript-eslint/eslint-plugin": "^8.0.0",
-        "@typescript-eslint/parser": "^8.0.0",
-        "eslint": "^9.0.0",
-        "http-server": "^14.1.1",
-        "husky": "^9.1.7",
-        "lint-staged": "^16.2.6",
-        "ts-node": "^10.9.1",
-        "typescript": "^5.4.0"
-    },
-    "license": "MIT"
+  "name": "pixicompose",
+  "version": "0.1.0",
+  "description": "Declarative UI framework for PixiJS inspired by SwiftUI and Jetpack Compose.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "npm run build && http-server . -p 8080 -o examples/basic.html",
+    "dev:layout": "npm run build && http-server . -p 8080 -o examples/layout.html",
+    "dev:button": "npm run build && http-server . -p 8080 -o examples/button.html",
+    "lint": "eslint src examples",
+    "lint:fix": "eslint src examples --fix",
+    "typecheck": "tsc --noEmit",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "pixi.js": "^8.14.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "canvas": "^3.2.0",
+    "eslint": "^9.0.0",
+    "http-server": "^14.1.1",
+    "husky": "^9.1.7",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
+    "lint-staged": "^16.2.6",
+    "ts-jest": "^29.4.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.4.0"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix"
+    ]
+  },
+  "license": "MIT"
 }
