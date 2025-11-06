@@ -30,11 +30,7 @@ export function render(vnode: VNode): any {
         break;
 
     case 'Text':
-        const textStyle = props.style || {};
-        if (!textStyle.fill) {
-            textStyle.fill = 0xFFFFFF; // Default to white text
-        }
-        el = new PIXI.Text({ text: props.text || '', style: textStyle });
+        el = createText(props);
         break;
 
     case 'Button':
@@ -274,4 +270,27 @@ function createButton(props: any) {
     container.addChild(label);
 
     return container;
+}
+
+function createText(props: any) {
+    const variantStyles = {
+        body: { fontSize: 16, fill: 0xFFFFFF },
+        heading: { fontSize: 24, fill: 0xFFFFFF, fontWeight: 'bold' },
+        title: { fontSize: 32, fill: 0xFFFFFF, fontWeight: 'bold' },
+        caption: { fontSize: 12, fill: 0xCCCCCC }
+    };
+
+    let baseStyle: any = {};
+
+    if (props.variant && variantStyles[props.variant as keyof typeof variantStyles]) {
+        baseStyle = { ...variantStyles[props.variant as keyof typeof variantStyles] };
+    } else {
+        baseStyle = { fill: 0xFFFFFF };
+    }
+
+    const mergedStyle = { ...baseStyle, ...(props.style || {}) };
+
+    const el = new PIXI.Text({ text: props.text || '', style: mergedStyle });
+
+    return el;
 }

@@ -13,6 +13,7 @@ export type { VNode } from './core/vnode.js';
 // Components
 export { Box } from './components/Box.js';
 export { Text } from './components/Text.js';
+export type { TextProps, TextStyle } from './components/Text.js';
 export { Button } from './components/Button.js';
 export type { ButtonProps, ColorConfig, StateColors } from './components/Button.js';
 export { Column } from './components/Column.js';
