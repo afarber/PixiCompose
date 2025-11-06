@@ -75,12 +75,15 @@ function layoutList(
     let offset = 0;
     for (const childVNode of children) {
         const child = render(childVNode);
+
+        const bounds = child.getBounds();
+
         if (direction === 'vertical') {
-            child.y = offset;
-            offset += (child.height ?? 0) + spacing;
+            child.y = offset - bounds.y;
+            offset += bounds.height + spacing;
         } else {
-            child.x = offset;
-            offset += (child.width ?? 0) + spacing;
+            child.x = offset - bounds.x;
+            offset += bounds.width + spacing;
         }
         container.addChild(child);
     }
@@ -91,12 +94,19 @@ function layoutGrid(children: any[], props: any) {
     const container = new PIXI.Container();
     const { columns = 2, spacing = 10 } = props;
 
-    children.forEach((childVNode, i) => {
+    const renderedChildren = children.map((childVNode) => {
         const child = render(childVNode);
+        return { child, bounds: child.getBounds() };
+    });
+
+    const maxWidth = Math.max(...renderedChildren.map(({ bounds }) => bounds.width));
+    const maxHeight = Math.max(...renderedChildren.map(({ bounds }) => bounds.height));
+
+    renderedChildren.forEach(({ child, bounds }, i) => {
         const row = Math.floor(i / columns);
         const col = i % columns;
-        child.x = col * ((child.width ?? 0) + spacing);
-        child.y = row * ((child.height ?? 0) + spacing);
+        child.x = col * (maxWidth + spacing) - bounds.x;
+        child.y = row * (maxHeight + spacing) - bounds.y;
         container.addChild(child);
     });
 
