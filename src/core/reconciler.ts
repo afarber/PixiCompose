@@ -37,11 +37,8 @@ export function render(vnode: VNode): any {
         el = createButton(props);
         break;
 
-    case 'Sprite':
-        el = PIXI.Sprite.from(props.texture || props.src || '');
-        for (const child of children) {
-            el.addChild(render(child));
-        }
+    case 'Image':
+        el = createImage(props, children);
         break;
 
     case 'Column':
@@ -293,4 +290,101 @@ function createText(props: any) {
     const el = new PIXI.Text({ text: props.text || '', style: mergedStyle });
 
     return el;
+}
+
+function createImage(props: any, children: any[]) {
+    const texture = props.texture || props.src;
+    if (!texture) {
+        console.error('Image requires either src or texture prop');
+        return new PIXI.Container();
+    }
+
+    const sprite = PIXI.Sprite.from(texture);
+
+    if (props.anchor !== undefined) {
+        if (typeof props.anchor === 'number') {
+            sprite.anchor.set(props.anchor, props.anchor);
+        } else {
+            sprite.anchor.set(props.anchor.x, props.anchor.y);
+        }
+    } else {
+        sprite.anchor.set(0.5, 0.5);
+    }
+
+    if (props.scaleMode && (props.width || props.height)) {
+        applyScaleMode(sprite, props.scaleMode, props.width, props.height);
+    } else {
+        if (props.width) sprite.width = props.width;
+        if (props.height) sprite.height = props.height;
+        if (props.scale !== undefined) {
+            if (typeof props.scale === 'number') {
+                sprite.scale.set(props.scale, props.scale);
+            } else {
+                sprite.scale.set(props.scale.x, props.scale.y);
+            }
+        }
+    }
+
+    const style = props.style || {};
+    if (style.tint !== undefined) sprite.tint = style.tint;
+    if (style.alpha !== undefined) sprite.alpha = style.alpha;
+    if (style.visible !== undefined) sprite.visible = style.visible;
+    if (style.blendMode !== undefined) sprite.blendMode = style.blendMode;
+    if (style.roundPixels !== undefined) sprite.roundPixels = style.roundPixels;
+
+    for (const child of children) {
+        sprite.addChild(render(child));
+    }
+
+    if (props.onClick) {
+        sprite.eventMode = props.eventMode || 'static';
+        sprite.cursor = props.cursor || 'pointer';
+        sprite.on('pointertap', props.onClick);
+    } else if (props.eventMode) {
+        sprite.eventMode = props.eventMode;
+        if (props.cursor) sprite.cursor = props.cursor;
+    }
+
+    return sprite;
+}
+
+function applyScaleMode(
+    sprite: PIXI.Sprite,
+    mode: string,
+    targetWidth?: number,
+    targetHeight?: number
+) {
+    const texture = sprite.texture;
+    const textureWidth = texture.width;
+    const textureHeight = texture.height;
+
+    if (!targetWidth && !targetHeight) return;
+
+    const tw = targetWidth || textureWidth;
+    const th = targetHeight || textureHeight;
+
+    switch (mode) {
+    case 'fit': {
+        const scaleX = tw / textureWidth;
+        const scaleY = th / textureHeight;
+        const scale = Math.min(scaleX, scaleY);
+        sprite.scale.set(scale, scale);
+        break;
+    }
+    case 'fill': {
+        const scaleX = tw / textureWidth;
+        const scaleY = th / textureHeight;
+        const scale = Math.max(scaleX, scaleY);
+        sprite.scale.set(scale, scale);
+        break;
+    }
+    case 'stretch': {
+        sprite.width = tw;
+        sprite.height = th;
+        break;
+    }
+    case 'none':
+    default:
+        break;
+    }
 }

@@ -20,4 +20,5 @@ export { Column } from './components/Column.js';
 export { Row } from './components/Row.js';
 export { Grid } from './components/Grid.js';
 export { Drawer } from './components/Drawer.js';
-export { Sprite } from './components/Sprite.js';
+export { Image } from './components/Image.js';
+export type { ImageProps, ImageStyle, ScaleMode } from './components/Image.js';

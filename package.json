@@ -37,6 +37,7 @@
     "dev:layout": "npm run build && http-server . -p 8080 -o examples/layout.html",
     "dev:button": "npm run build && http-server . -p 8080 -o examples/button.html",
     "dev:text": "npm run build && http-server . -p 8080 -o examples/text.html",
+    "dev:image": "npm run build && http-server . -p 8080 -o examples/image.html",
     "lint": "eslint src examples",
     "lint:fix": "eslint src examples --fix",
     "typecheck": "tsc --noEmit",
