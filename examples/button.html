@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixiCompose Button Example</title>
+    <script type="importmap">
+    {
+        "imports": {
+            "pixi.js": "../node_modules/pixi.js/dist/pixi.mjs"
+        }
+    }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+    <script type="module">
+        import * as PIXI from 'pixi.js';
+        import { compose } from '../dist/core/compose.js';
+        import { h } from '../dist/core/vnode.js';
+        import { Box } from '../dist/components/Box.js';
+        import { Text } from '../dist/components/Text.js';
+        import { Button } from '../dist/components/Button.js';
+        import { Column } from '../dist/components/Column.js';
+        import { Row } from '../dist/components/Row.js';
+
+        const app = new PIXI.Application();
+        await app.init({
+            resizeTo: window,
+            antialias: true,
+            hello: true
+        });
+        document.body.appendChild(app.canvas);
+
+        compose(
+            () =>
+                h(
+                    Box,
+                    {},
+                    h(Text, { text: 'Button States Demo', x: 50, y: 30, style: { fontSize: 24, fill: 0xFFFFFF } }),
+                    h(
+                        Column,
+                        { x: 50, y: 80, spacing: 20 },
+                        h(Text, { text: 'Filled Variant:', style: { fontSize: 18, fill: 0xFFFFFF } }),
+                        h(Button, {
+                            text: 'Normal State',
+                            x: 100,
+                            onClick: () => console.log('Normal button clicked!')
+                        }),
+                        h(Button, {
+                            text: 'Disabled State',
+                            x: 100,
+                            disabled: true
+                        }),
+                        h(Button, {
+                            text: 'Custom Colors',
+                            x: 100,
+                            colors: {
+                                normal: { bg: 0xFF5722, text: 0xFFFFFF },
+                                hovered: { bg: 0xE64A19, text: 0xFFFFFF },
+                                pressed: { bg: 0xD84315, text: 0xFFFFFF }
+                            },
+                            onClick: () => console.log('Custom button clicked!')
+                        })
+                    ),
+                    h(
+                        Column,
+                        { x: 300, y: 80, spacing: 20 },
+                        h(Text, { text: 'Tonal Variant:', style: { fontSize: 18, fill: 0xFFFFFF } }),
+                        h(Button, {
+                            text: 'Normal Tonal',
+                            x: 100,
+                            variant: 'tonal',
+                            onClick: () => console.log('Tonal button clicked!')
+                        }),
+                        h(Button, {
+                            text: 'Disabled Tonal',
+                            x: 100,
+                            variant: 'tonal',
+                            disabled: true
+                        }),
+                        h(Button, {
+                            text: 'Custom Tonal',
+                            x: 100,
+                            variant: 'tonal',
+                            colors: {
+                                normal: { bg: 0xE1F5E1, text: 0x4CAF50 },
+                                hovered: { bg: 0xC8E6C9, text: 0x388E3C },
+                                pressed: { bg: 0xA5D6A7, text: 0x2E7D32 }
+                            },
+                            onClick: () => console.log('Custom tonal clicked!')
+                        })
+                    ),
+                    h(Text, { text: 'Different Sizes:', x: 50, y: 480, style: { fontSize: 18, fill: 0xFFFFFF } }),
+                    h(
+                        Row,
+                        { x: 50, y: 520, spacing: 20 },
+                        h(Button, {
+                            text: 'Small',
+                            width: 80,
+                            height: 32,
+                            onClick: () => console.log('Small button!')
+                        }),
+                        h(Button, {
+                            text: 'Large',
+                            width: 160,
+                            height: 56,
+                            onClick: () => console.log('Large button!')
+                        })
+                    ),
+                    h(Text, { text: 'Rotated Button (45°):', x: 50, y: 600, style: { fontSize: 18, fill: 0xFFFFFF } }),
+                    h(Button, {
+                        text: 'Rotated',
+                        x: 150,
+                        y: 650,
+                        rotation: Math.PI / 4,
+                        onClick: () => console.log('Rotated button clicked!')
+                    })
+                ),
+            app
+        );
+    </script>
+</body>
+</html>

@@ -31,18 +31,7 @@ export function render(vnode: VNode): any {
         break;
 
     case 'Button':
-        el = new PIXI.Container();
-        const buttonStyle = props.style || {};
-        if (!buttonStyle.fill) {
-            buttonStyle.fill = 0xFFFFFF; // Default to white text
-        }
-        const label = new PIXI.Text({
-            text: props.text || 'Button',
-            style: buttonStyle
-        });
-        label.eventMode = 'static';
-        label.on('pointerdown', props.onClick);
-        el.addChild(label);
+        el = createButton(props);
         break;
 
     case 'Sprite':
@@ -70,6 +59,7 @@ export function render(vnode: VNode): any {
 
     if ('x' in props) el.x = props.x;
     if ('y' in props) el.y = props.y;
+    if ('rotation' in props) el.rotation = props.rotation;
 
     return el;
 }
@@ -148,6 +138,107 @@ function createDrawer(props: any, children: any[]) {
         container.addChild(backdrop);
         container.addChild(panel);
     }
+
+    return container;
+}
+
+function createButton(props: any) {
+    const width = props.width ?? 120;
+    const height = props.height ?? 40;
+    const variant = props.variant ?? 'filled';
+    const isDisabled = props.disabled ?? false;
+    const buttonText = props.text ?? 'Button';
+
+    const defaultColors = variant === 'filled'
+        ? {
+            normal: { bg: 0x007AFF, text: 0xFFFFFF },
+            hovered: { bg: 0x0062CC, text: 0xFFFFFF },
+            pressed: { bg: 0x004999, text: 0xFFFFFF },
+            disabled: { bg: 0xCCCCCC, text: 0x999999 }
+        }
+        : {
+            normal: { bg: 0xE5F1FF, text: 0x007AFF },
+            hovered: { bg: 0xCCE4FF, text: 0x0062CC },
+            pressed: { bg: 0xB3D7FF, text: 0x004999 },
+            disabled: { bg: 0xF5F5F5, text: 0xCCCCCC }
+        };
+
+    const colors = {
+        normal: { ...defaultColors.normal, ...(props.colors?.normal ?? {}) },
+        hovered: { ...defaultColors.hovered, ...(props.colors?.hovered ?? {}) },
+        pressed: { ...defaultColors.pressed, ...(props.colors?.pressed ?? {}) },
+        disabled: { ...defaultColors.disabled, ...(props.colors?.disabled ?? {}) }
+    };
+
+    let currentState: 'normal' | 'hovered' | 'pressed' | 'disabled' = isDisabled ? 'disabled' : 'normal';
+
+    const container = new PIXI.Container();
+    const background = new PIXI.Graphics();
+    const label = new PIXI.Text({
+        text: buttonText,
+        style: { fontSize: 16 }
+    });
+
+    container.pivot.set(width / 2, height / 2);
+    container.hitArea = new PIXI.Rectangle(0, 0, width, height);
+
+    label.anchor.set(0.5, 0.5);
+    label.x = width / 2;
+    label.y = height / 2;
+
+    function updateVisuals() {
+        const currentColors = colors[currentState];
+
+        background.clear();
+        background.roundRect(0, 0, width, height, 8);
+        background.fill({ color: currentColors.bg });
+
+        label.style.fill = currentColors.text;
+
+        if (currentState === 'pressed') {
+            container.scale.set(0.95);
+        } else {
+            container.scale.set(1.0);
+        }
+    }
+
+    updateVisuals();
+
+    if (!isDisabled) {
+        container.eventMode = 'static';
+        container.cursor = 'pointer';
+
+        container.on('pointerover', () => {
+            if (currentState !== 'pressed') {
+                currentState = 'hovered';
+                updateVisuals();
+            }
+        });
+
+        container.on('pointerout', () => {
+            currentState = 'normal';
+            updateVisuals();
+        });
+
+        container.on('pointerdown', () => {
+            currentState = 'pressed';
+            updateVisuals();
+        });
+
+        container.on('pointerup', () => {
+            currentState = 'hovered';
+            updateVisuals();
+        });
+
+        container.on('pointertap', () => {
+            if (props.onClick) {
+                props.onClick();
+            }
+        });
+    }
+
+    container.addChild(background);
+    container.addChild(label);
 
     return container;
 }

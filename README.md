@@ -53,6 +53,7 @@ To run the examples:
 ```bash
 npm run dev          # Opens basic.html example in your browser
 npm run dev:layout   # Opens layout.html example in your browser
+npm run dev:button   # Opens button.html example in your browser
 ```
 
 To run linting and type checking:
@@ -71,7 +72,7 @@ PixiCompose currently includes the following foundational UI components:
 
 -   Text – Renders text labels using Pixi's text objects
 
--   Button – Simple text-based button with click handler
+-   Button – Interactive button with variants (filled, tonal), state management (normal, hovered, pressed, disabled), and customizable colors
 
 -   Column – Stacks children vertically with spacing
 
@@ -118,4 +119,78 @@ compose(
         ),
     app
 );
+```
+
+## Button API
+
+The Button component supports multiple variants, interactive states, and customizable styling.
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `text` | `string` | `'Button'` | Button label text |
+| `onClick` | `() => void` | `undefined` | Click handler function |
+| `variant` | `'filled' \| 'tonal'` | `'filled'` | Button style variant |
+| `disabled` | `boolean` | `false` | Whether button is disabled |
+| `colors` | `StateColors` | See below | State-specific colors |
+| `width` | `number` | `120` | Button width in pixels |
+| `height` | `number` | `40` | Button height in pixels |
+| `x` | `number` | `0` | X position |
+| `y` | `number` | `0` | Y position |
+
+### Variants
+
+- **Filled**: Bold solid background (high emphasis) - default blue with white text
+- **Tonal**: Lighter tinted background (medium emphasis) - light blue with dark blue text
+
+### States
+
+Buttons automatically respond to user interaction:
+- **Normal**: Default state
+- **Hovered**: Mouse over the button
+- **Pressed**: Mouse button down
+- **Disabled**: Non-interactive state
+
+### Custom Colors
+
+Use the `colors` prop to customize button appearance for each state:
+
+```javascript
+h(Button, {
+    text: 'Custom Button',
+    colors: {
+        normal: { bg: 0xFF5722, text: 0xFFFFFF },
+        hovered: { bg: 0xE64A19, text: 0xFFFFFF },
+        pressed: { bg: 0xD84315, text: 0xFFFFFF },
+        disabled: { bg: 0xCCCCCC, text: 0x999999 }
+    },
+    onClick: () => console.log('Clicked!')
+})
+```
+
+### Examples
+
+```javascript
+h(Button, {
+    text: 'Click Me',
+    onClick: () => alert('Hello!')
+})
+
+h(Button, {
+    text: 'Tonal Button',
+    variant: 'tonal',
+    onClick: () => console.log('Tonal clicked')
+})
+
+h(Button, {
+    text: 'Disabled',
+    disabled: true
+})
+
+h(Button, {
+    text: 'Large Button',
+    width: 200,
+    height: 60
+})
 ```

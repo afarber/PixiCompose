@@ -1,4 +1,28 @@
 import { h } from '../core/vnode.js';
 
-export const Button = (props: any, ...children: any[]) =>
+export interface ColorConfig {
+    bg: number;
+    text: number;
+}
+
+export interface StateColors {
+    normal?: ColorConfig;
+    hovered?: ColorConfig;
+    pressed?: ColorConfig;
+    disabled?: ColorConfig;
+}
+
+export interface ButtonProps {
+    text: string;
+    onClick?: () => void;
+    variant?: 'filled' | 'tonal';
+    disabled?: boolean;
+    colors?: StateColors;
+    width?: number;
+    height?: number;
+    x?: number;
+    y?: number;
+}
+
+export const Button = (props: ButtonProps, ...children: any[]) =>
     h('Button', props, ...children);
