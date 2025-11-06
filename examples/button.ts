@@ -74,10 +74,10 @@ compose(
                     onClick: () => console.log('Custom tonal clicked!')
                 })
             ),
-            h(Text, { text: 'Different Sizes:', x: 50, y: 480, style: { fontSize: 18, fill: 0xFFFFFF } }),
+            h(Text, { text: 'Different Sizes:', x: 50, y: 430, style: { fontSize: 18, fill: 0xFFFFFF } }),
             h(
                 Row,
-                { x: 50, y: 520, spacing: 20 },
+                { x: 200, y: 430, spacing: 30 },
                 h(Button, {
                     text: 'Small',
                     width: 80,
@@ -91,11 +91,11 @@ compose(
                     onClick: () => console.log('Large button!')
                 })
             ),
-            h(Text, { text: 'Rotated Button (45°):', x: 50, y: 600, style: { fontSize: 18, fill: 0xFFFFFF } }),
+            h(Text, { text: 'Rotated Button (45°):', x: 50, y: 520, style: { fontSize: 18, fill: 0xFFFFFF } }),
             h(Button, {
                 text: 'Rotated',
-                x: 150,
-                y: 650,
+                x: 300,
+                y: 570,
                 rotation: Math.PI / 4,
                 onClick: () => console.log('Rotated button clicked!')
             })
