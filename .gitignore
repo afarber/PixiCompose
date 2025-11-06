@@ -27,7 +27,6 @@ lerna-debug.log
 !.gitkeep
 *__temp
 node_modules
-docs
 coverage
 coverage.lcov
 .nyc_output

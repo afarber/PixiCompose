@@ -72,8 +72,6 @@ function layoutList(
     const container = new PIXI.Container();
     const spacing = props.spacing ?? 10;
 
-    console.log(`=== Layout ${direction} list ===`);
-
     let offset = 0;
     for (const childVNode of children) {
         const child = render(childVNode);
@@ -82,22 +80,17 @@ function layoutList(
         const childWidth = (child as any)._buttonWidth ?? child.width ?? 0;
         const childHeight = (child as any)._buttonHeight ?? child.height ?? 0;
 
-        console.log(`Child: width=${childWidth}, height=${childHeight}, pivot.x=${child.pivot?.x}, pivot.y=${child.pivot?.y}`);
-
         if (direction === 'vertical') {
             // For vertical layout, position at offset plus half height if pivot is centered
             child.y = offset + (child.pivot ? child.pivot.y : 0);
-            console.log(`  Positioned at y=${child.y} (offset=${offset})`);
             offset += childHeight + spacing;
         } else {
             // For horizontal layout, position at offset plus half width if pivot is centered
             child.x = offset + (child.pivot ? child.pivot.x : 0);
-            console.log(`  Positioned at x=${child.x} (offset=${offset})`);
             offset += childWidth + spacing;
         }
         container.addChild(child);
     }
-    console.log(`Final offset: ${offset}`);
     return container;
 }
 
