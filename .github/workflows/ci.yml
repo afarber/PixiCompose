@@ -2,32 +2,39 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   pull_request:
-    branches: [main]
+    branches: [main, master]
+
+permissions:
+  contents: read
 
 jobs:
-  lint-and-typecheck:
-    runs-on: ubuntu-latest
+  copyright:
+    name: Check Copyright Headers
+    uses: ./.github/workflows/_copyright.yml
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  lint:
+    name: Lint
+    uses: ./.github/workflows/_lint.yml
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
+  typecheck:
+    name: Type Check
+    needs: [copyright, lint]
+    uses: ./.github/workflows/_typecheck.yml
 
-      - name: Install dependencies
-        run: npm ci
+  test:
+    name: Unit Tests
+    needs: [copyright, lint]
+    uses: ./.github/workflows/_test.yml
 
-      - name: Run ESLint
-        run: npm run lint
+  build:
+    name: Build
+    needs: [typecheck, test]
+    uses: ./.github/workflows/_build.yml
 
-      - name: Run TypeScript type checking
-        run: npm run typecheck
-
-      - name: Build project
-        run: npm run build
+  test-browser:
+    name: Browser Tests (PR only)
+    if: github.event_name == 'pull_request'
+    needs: [build]
+    uses: ./.github/workflows/_test-browser.yml

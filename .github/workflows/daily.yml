@@ -1,0 +1,14 @@
+name: Daily Browser Tests
+
+on:
+  schedule:
+    - cron: '45 9 * * *'  # Daily at 09:45 UTC
+  workflow_dispatch:  # Allow manual trigger
+
+permissions:
+  contents: read
+
+jobs:
+  test-browser:
+    name: Run Browser Tests
+    uses: ./.github/workflows/_test-browser.yml

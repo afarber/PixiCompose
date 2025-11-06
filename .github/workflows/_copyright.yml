@@ -1,0 +1,19 @@
+name: Check Copyright Headers
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  copyright:
+    name: Check Copyright Headers
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check copyright headers
+        run: bash ./scripts/check-copyright.sh
