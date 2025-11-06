@@ -67,15 +67,15 @@ npm run typecheck    # Run TypeScript type checking
 
 PixiCompose currently includes the following foundational UI components:
 
--   Container – Basic layout and grouping element
+-   Box – Basic layout and grouping element
 
--   Text – Renders text labels using Pixi’s text objects
+-   Text – Renders text labels using Pixi's text objects
 
 -   Button – Simple text-based button with click handler
 
--   VerticalList – Stacks children vertically with spacing
+-   Column – Stacks children vertically with spacing
 
--   HorizontalList – Aligns children horizontally with spacing
+-   Row – Aligns children horizontally with spacing
 
 -   Grid – Lays out children in a grid by row and column
 
@@ -87,7 +87,7 @@ PixiCompose currently includes the following foundational UI components:
 import * as PIXI from 'pixi.js';
 import { compose } from 'pixicompose/core/compose';
 import { h } from 'pixicompose/core/vnode';
-import { Container, Text, Button, VerticalList } from 'pixicompose/components';
+import { Box, Text, Button, Column } from 'pixicompose/components';
 
 const app = new PIXI.Application();
 await app.init({
@@ -100,11 +100,11 @@ document.body.appendChild(app.canvas);
 compose(
     () =>
         h(
-            Container,
+            Box,
             {},
             h(Text, { text: 'Hello PixiCompose!', x: 100, y: 100 }),
             h(
-                VerticalList,
+                Column,
                 { x: 100, y: 160, spacing: 10 },
                 h(Button, {
                     text: 'Play',

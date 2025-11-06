@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import { compose } from '../src/core/compose';
 import { h } from '../src/core/vnode';
-import { Container } from '../src/components/Container';
+import { Box } from '../src/components/Box';
 import { Text } from '../src/components/Text';
 import { Button } from '../src/components/Button';
 
@@ -16,7 +16,7 @@ document.body.appendChild(app.canvas);
 compose(
     () =>
         h(
-            Container,
+            Box,
             {},
             h(Text, { text: 'Hello PixiCompose!', x: 100, y: 100 }),
             h(Button, {

@@ -15,7 +15,7 @@ export function render(vnode: VNode): any {
         el = createDrawer(props, children);
         break;
 
-    case 'Container':
+    case 'Box':
         el = new PIXI.Container();
         for (const child of children) {
             el.addChild(render(child));
@@ -52,11 +52,11 @@ export function render(vnode: VNode): any {
         }
         break;
 
-    case 'VerticalList':
+    case 'Column':
         el = layoutList(children, props, 'vertical');
         break;
 
-    case 'HorizontalList':
+    case 'Row':
         el = layoutList(children, props, 'horizontal');
         break;
 

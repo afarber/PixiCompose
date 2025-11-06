@@ -1,13 +1,13 @@
 import { h } from '../core/vnode.js';
 
-export interface HorizontalListProps {
+export interface RowProps {
     spacing?: number;
     x?: number;
     y?: number;
     align?: 'top' | 'center' | 'bottom';
 }
 
-export const HorizontalList = (
-    props: HorizontalListProps,
+export const Row = (
+    props: RowProps,
     ...children: any[]
-) => h('HorizontalList', props, ...children);
+) => h('Row', props, ...children);

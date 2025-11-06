@@ -25,7 +25,7 @@
         import * as PIXI from 'pixi.js';
         import { compose } from '../dist/core/compose.js';
         import { h } from '../dist/core/vnode.js';
-        import { Container } from '../dist/components/Container.js';
+        import { Box } from '../dist/components/Box.js';
         import { Text } from '../dist/components/Text.js';
         import { Button } from '../dist/components/Button.js';
 
@@ -40,7 +40,7 @@
         compose(
             () =>
                 h(
-                    Container,
+                    Box,
                     {},
                     h(Text, { text: 'Hello PixiCompose!', x: 100, y: 100 }),
                     h(Button, {

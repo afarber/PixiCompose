@@ -25,8 +25,8 @@
         import * as PIXI from 'pixi.js';
         import { compose } from '../dist/core/compose.js';
         import { h } from '../dist/core/vnode.js';
-        import { VerticalList } from '../dist/components/VerticalList.js';
-        import { HorizontalList } from '../dist/components/HorizontalList.js';
+        import { Column } from '../dist/components/Column.js';
+        import { Row } from '../dist/components/Row.js';
         import { Grid } from '../dist/components/Grid.js';
         import { Text } from '../dist/components/Text.js';
         import { Drawer } from '../dist/components/Drawer.js';
@@ -42,17 +42,17 @@
         compose(
             () =>
                 h(
-                    'Container',
+                    'Box',
                     {},
                     h(
-                        VerticalList,
+                        Column,
                         { x: 50, y: 50, spacing: 20 },
                         h(Text, { text: 'Item 1' }),
                         h(Text, { text: 'Item 2' }),
                         h(Text, { text: 'Item 3' })
                     ),
                     h(
-                        HorizontalList,
+                        Row,
                         { x: 300, y: 50, spacing: 15 },
                         h(Text, { text: 'A' }),
                         h(Text, { text: 'B' }),

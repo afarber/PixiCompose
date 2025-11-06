@@ -1,8 +1,8 @@
 import * as PIXI from 'pixi.js';
 import { compose } from '../src/core/compose';
 import { h } from '../src/core/vnode';
-import { VerticalList } from '../src/components/VerticalList';
-import { HorizontalList } from '../src/components/HorizontalList';
+import { Column } from '../src/components/Column';
+import { Row } from '../src/components/Row';
 import { Grid } from '../src/components/Grid';
 import { Text } from '../src/components/Text';
 import { Drawer } from '../src/components/Drawer';
@@ -18,17 +18,17 @@ document.body.appendChild(app.canvas);
 compose(
     () =>
         h(
-            'Container',
+            'Box',
             {},
             h(
-                VerticalList,
+                Column,
                 { x: 50, y: 50, spacing: 20 },
                 h(Text, { text: 'Item 1' }),
                 h(Text, { text: 'Item 2' }),
                 h(Text, { text: 'Item 3' })
             ),
             h(
-                HorizontalList,
+                Row,
                 { x: 300, y: 50, spacing: 15 },
                 h(Text, { text: 'A' }),
                 h(Text, { text: 'B' }),
