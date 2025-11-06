@@ -30,7 +30,11 @@
         import { Button } from '../dist/components/Button.js';
 
         const app = new PIXI.Application();
-        await app.init({ width: 800, height: 600 });
+        await app.init({
+            resizeTo: window,
+            antialias: true,
+            hello: true
+        });
         document.body.appendChild(app.canvas);
 
         compose(

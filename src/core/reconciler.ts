@@ -116,8 +116,11 @@ function layoutGrid(children: any[], props: any) {
 function createDrawer(props: any, children: any[]) {
     const container = new PIXI.Container();
 
+    const width = props.width ?? window.innerWidth;
+    const height = props.height ?? window.innerHeight;
+
     const backdrop = new PIXI.Graphics();
-    backdrop.rect(0, 0, 800, 600); // TODO: dynamic sizing later
+    backdrop.rect(0, 0, width, height);
     backdrop.fill({ color: 0x000000, alpha: props.backdropAlpha ?? 0.5 });
 
     const panel = new PIXI.Container();
@@ -129,13 +132,13 @@ function createDrawer(props: any, children: any[]) {
 
     switch (side) {
     case 'right':
-        panel.x = 800 - size;
+        panel.x = width - size;
         break;
     case 'top':
         panel.y = 0;
         break;
     case 'bottom':
-        panel.y = 600 - size;
+        panel.y = height - size;
         break;
     default:
         panel.x = 0; // left

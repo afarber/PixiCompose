@@ -5,8 +5,13 @@ import { Container } from '../src/components/Container';
 import { Text } from '../src/components/Text';
 import { Button } from '../src/components/Button';
 
-const app = new PIXI.Application({ width: 800, height: 600 });
-document.body.appendChild(app.view);
+const app = new PIXI.Application();
+await app.init({
+    resizeTo: window,
+    antialias: true,
+    hello: true
+});
+document.body.appendChild(app.canvas);
 
 compose(
     () =>

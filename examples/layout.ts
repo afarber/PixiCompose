@@ -7,8 +7,13 @@ import { Grid } from '../src/components/Grid';
 import { Text } from '../src/components/Text';
 import { Drawer } from '../src/components/Drawer';
 
-const app = new PIXI.Application({ width: 800, height: 600 });
-document.body.appendChild(app.view);
+const app = new PIXI.Application();
+await app.init({
+    resizeTo: window,
+    antialias: true,
+    hello: true
+});
+document.body.appendChild(app.canvas);
 
 compose(
     () =>
