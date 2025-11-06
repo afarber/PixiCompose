@@ -1,5 +1,6 @@
 # PixiCompose
 
+[![CI](https://github.com/afarber/PixiCompose/actions/workflows/ci.yml/badge.svg)](https://github.com/afarber/PixiCompose/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/Made%20with-TypeScript-blue.svg)](https://www.typescriptlang.org/)
 [![PixiJS](https://img.shields.io/badge/Powered%20by-PixiJS-orange.svg)](https://pixijs.com/)
@@ -94,7 +95,7 @@ const app = new PIXI.Application();
 await app.init({
     resizeTo: window,
     antialias: true,
-    hello: true
+    hello: true,
 });
 document.body.appendChild(app.canvas);
 
@@ -123,4 +124,20 @@ compose(
 
 ## Documentation
 
-- [Button Component](docs/BUTTON.md) - Detailed button documentation with variants, states, and examples
+-   [Button Component](docs/BUTTON.md) - Detailed button documentation with variants, states, and examples
+-   [Testing Guide](docs/TESTING.md) - How to run and write tests
+-   [Contributing Guide](docs/CONTRIBUTING.md) - How to contribute to PixiCompose
+-   [Publishing Guide](docs/PUBLISHING.md) - How to publish releases (maintainers)
+-   [GitHub Workflows](docs/GITHUB_WORKFLOWS.md) - CI/CD pipeline documentation
+
+## Testing
+
+```bash
+npm test                  # Jest unit tests (24 tests)
+npm run test:browser      # Playwright browser tests (27 tests)
+npm run test:coverage     # Coverage report
+```
+
+## License
+
+MIT - See [LICENSE](LICENSE) file for details
