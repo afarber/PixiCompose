@@ -76,14 +76,18 @@ function layoutList(
     for (const childVNode of children) {
         const child = render(childVNode);
 
-        const bounds = child.getBounds();
+        // Get logical dimensions (stored for buttons, or use actual for other elements)
+        const childWidth = (child as any)._buttonWidth ?? child.width ?? 0;
+        const childHeight = (child as any)._buttonHeight ?? child.height ?? 0;
 
         if (direction === 'vertical') {
-            child.y = offset - bounds.y;
-            offset += bounds.height + spacing;
+            // For vertical layout, position at offset plus half height if pivot is centered
+            child.y = offset + (child.pivot ? child.pivot.y : 0);
+            offset += childHeight + spacing;
         } else {
-            child.x = offset - bounds.x;
-            offset += bounds.width + spacing;
+            // For horizontal layout, position at offset plus half width if pivot is centered
+            child.x = offset + (child.pivot ? child.pivot.x : 0);
+            offset += childWidth + spacing;
         }
         container.addChild(child);
     }
@@ -96,17 +100,22 @@ function layoutGrid(children: any[], props: any) {
 
     const renderedChildren = children.map((childVNode) => {
         const child = render(childVNode);
-        return { child, bounds: child.getBounds() };
+        // Get logical dimensions for consistent grid cell sizing
+        const childWidth = (child as any)._buttonWidth ?? child.width ?? 0;
+        const childHeight = (child as any)._buttonHeight ?? child.height ?? 0;
+        return { child, width: childWidth, height: childHeight };
     });
 
-    const maxWidth = Math.max(...renderedChildren.map(({ bounds }) => bounds.width));
-    const maxHeight = Math.max(...renderedChildren.map(({ bounds }) => bounds.height));
+    // Calculate uniform cell size based on largest child
+    const maxWidth = Math.max(...renderedChildren.map(({ width }) => width));
+    const maxHeight = Math.max(...renderedChildren.map(({ height }) => height));
 
-    renderedChildren.forEach(({ child, bounds }, i) => {
+    renderedChildren.forEach(({ child }, i) => {
         const row = Math.floor(i / columns);
         const col = i % columns;
-        child.x = col * (maxWidth + spacing) - bounds.x;
-        child.y = row * (maxHeight + spacing) - bounds.y;
+        // Position at cell location, adjusting for pivot if element has one
+        child.x = col * (maxWidth + spacing) + (child.pivot ? child.pivot.x : 0);
+        child.y = row * (maxHeight + spacing) + (child.pivot ? child.pivot.y : 0);
         container.addChild(child);
     });
 
@@ -189,8 +198,15 @@ function createButton(props: any) {
         style: { fontSize: 16 }
     });
 
+    // Set pivot to center so button rotates and scales from its center point
     container.pivot.set(width / 2, height / 2);
+
+    // Define hit area for mouse interactions (full button rectangle)
     container.hitArea = new PIXI.Rectangle(0, 0, width, height);
+
+    // Store logical dimensions for layout calculations (pivot shifts actual bounds)
+    (container as any)._buttonWidth = width;
+    (container as any)._buttonHeight = height;
 
     label.anchor.set(0.5, 0.5);
     label.x = width / 2;
