@@ -1,9 +1,5 @@
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
-import licenseHeader from 'eslint-plugin-license-header';
-import { readFileSync } from 'fs';
-
-const licenseHeaderText = readFileSync('./LICENSE-HEADER.txt', 'utf8');
 
 const config = [
     {
@@ -45,7 +41,6 @@ const config = [
         },
         plugins: {
             '@typescript-eslint': tsPlugin,
-            'license-header': licenseHeader,
         },
         rules: {
             indent: ['error', 4],
@@ -58,7 +53,6 @@ const config = [
                 'error',
                 { argsIgnorePattern: '^_' },
             ],
-            'license-header/header': ['error', licenseHeaderText],
         },
     },
     {
