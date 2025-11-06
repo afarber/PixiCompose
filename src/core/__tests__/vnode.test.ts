@@ -5,7 +5,7 @@
  * This file is part of the PixiCompose project (https://github.com/afarber/PixiCompose)
  */
 
-import { h, VNode } from './vnode';
+import { h, VNode } from '../vnode';
 
 describe('h function', () => {
     it('should create VNode with type and props', () => {
