@@ -64,7 +64,7 @@ compose(
             h(Text, {
                 text: 'Rotated Text (45°)',
                 x: 600,
-                y: 300,
+                y: 400,
                 rotation: Math.PI / 4,
                 style: { fontSize: 20, fill: 0x4CAF50 }
             }),
