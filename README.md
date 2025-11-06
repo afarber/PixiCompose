@@ -71,13 +71,15 @@ PixiCompose currently includes the following foundational UI components:
 
 -   **Box** – Basic layout and grouping element
 
--   **Text** – Renders text labels using Pixi's text objects
+-   **Text** – Renders text labels using Pixi's text objects. [See documentation](docs/TEXT.md)
 
--   **Button** – Interactive button with variants (filled, tonal), state management (normal, hovered, pressed, disabled), and customizable colors. [See detailed documentation](docs/BUTTON.md)
+-   **Image** – Displays sprites and textures with flexible configuration options. [See documentation](docs/IMAGE.md)
 
--   **Column** – Stacks children vertically with spacing
+-   **Button** – Interactive button with variants (filled, tonal), state management (normal, hovered, pressed, disabled), and customizable colors. [See documentation](docs/BUTTON.md)
 
--   **Row** – Aligns children horizontally with spacing
+-   **Column** – Stacks children vertically with spacing. [See documentation](docs/COLUMN.md)
+
+-   **Row** – Aligns children horizontally with spacing. [See documentation](docs/ROW.md)
 
 -   **Grid** – Lays out children in a grid by row and column
 
@@ -124,7 +126,16 @@ compose(
 
 ## Documentation
 
--   [Button Component](docs/BUTTON.md) - Detailed button documentation with variants, states, and examples
+### Component Documentation
+
+-   [Text Component](docs/TEXT.md) - Text rendering with styling options
+-   [Image Component](docs/IMAGE.md) - Sprite and texture display
+-   [Button Component](docs/BUTTON.md) - Interactive buttons with variants and states
+-   [Column Component](docs/COLUMN.md) - Vertical layout container
+-   [Row Component](docs/ROW.md) - Horizontal layout container
+
+### Development Guides
+
 -   [Testing Guide](docs/TESTING.md) - How to run and write tests
 -   [Contributing Guide](docs/CONTRIBUTING.md) - How to contribute to PixiCompose
 -   [Publishing Guide](docs/PUBLISHING.md) - How to publish releases (maintainers)
