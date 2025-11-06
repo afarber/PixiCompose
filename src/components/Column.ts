@@ -9,9 +9,10 @@ import { h } from '../core/vnode.js';
 
 export interface ColumnProps {
     spacing?: number;
+    padding?: number;
+    align?: 'left' | 'center' | 'right';
     x?: number;
     y?: number;
-    align?: 'left' | 'center' | 'right';
 }
 
 export const Column = (props: ColumnProps, ...children: any[]) =>

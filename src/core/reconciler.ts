@@ -71,26 +71,55 @@ function layoutList(
 ) {
     const container = new PIXI.Container();
     const spacing = props.spacing ?? 10;
+    const padding = props.padding ?? 0;
+    const align = props.align ?? (direction === 'vertical' ? 'left' : 'top');
 
-    let offset = 0;
-    for (const childVNode of children) {
+    const renderedChildren = children.map((childVNode) => {
         const child = render(childVNode);
-
-        // Get logical dimensions (stored for buttons, or use actual for other elements)
         const childWidth = (child as any)._buttonWidth ?? child.width ?? 0;
         const childHeight = (child as any)._buttonHeight ?? child.height ?? 0;
+        return { child, width: childWidth, height: childHeight };
+    });
 
+    let maxCrossSize = 0;
+    if (direction === 'horizontal') {
+        maxCrossSize = Math.max(...renderedChildren.map(({ height }) => height), 0);
+    } else {
+        maxCrossSize = Math.max(...renderedChildren.map(({ width }) => width), 0);
+    }
+
+    let offset = padding;
+
+    for (const { child, width, height } of renderedChildren) {
         if (direction === 'vertical') {
-            // For vertical layout, position at offset plus half height if pivot is centered
             child.y = offset + (child.pivot ? child.pivot.y : 0);
-            offset += childHeight + spacing;
+
+            if (align === 'left') {
+                child.x = padding + (child.pivot ? child.pivot.x : 0);
+            } else if (align === 'center') {
+                child.x = padding + (maxCrossSize / 2);
+            } else if (align === 'right') {
+                child.x = padding + maxCrossSize - width + (child.pivot ? child.pivot.x : 0);
+            }
+
+            offset += height + spacing;
         } else {
-            // For horizontal layout, position at offset plus half width if pivot is centered
             child.x = offset + (child.pivot ? child.pivot.x : 0);
-            offset += childWidth + spacing;
+
+            if (align === 'top') {
+                child.y = padding + (child.pivot ? child.pivot.y : 0);
+            } else if (align === 'center') {
+                child.y = padding + (maxCrossSize / 2);
+            } else if (align === 'bottom') {
+                child.y = padding + maxCrossSize - height + (child.pivot ? child.pivot.y : 0);
+            }
+
+            offset += width + spacing;
         }
+
         container.addChild(child);
     }
+
     return container;
 }
 

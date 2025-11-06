@@ -9,9 +9,10 @@ import { h } from '../core/vnode.js';
 
 export interface RowProps {
     spacing?: number;
+    padding?: number;
+    align?: 'top' | 'center' | 'bottom';
     x?: number;
     y?: number;
-    align?: 'top' | 'center' | 'bottom';
 }
 
 export const Row = (
