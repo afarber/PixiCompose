@@ -1,0 +1,40 @@
+# Source files
+src/
+tests/
+examples/
+
+# Scripts
+scripts/
+
+# Documentation (except README)
+docs/
+CLAUDE.md
+CLAUDE-plan.md
+
+# CI/CD
+.github/
+.husky/
+
+# Config files
+.gitattributes
+.gitignore
+.prettierrc
+eslint.config.mjs
+jest.config.js
+playwright.config.ts
+tsconfig.json
+LICENSE-HEADER.txt
+
+# Build artifacts
+node_modules/
+coverage/
+.nyc_output/
+playwright-report/
+
+# IDE
+.vscode/
+.idea/
+
+# Misc
+*.log
+.DS_Store

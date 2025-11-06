@@ -4,6 +4,33 @@
   "description": "Declarative UI framework for PixiJS inspired by SwiftUI and Jetpack Compose.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "author": "Alexander Farber <farber72@outlook.de>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/afarber/PixiCompose.git"
+  },
+  "bugs": {
+    "url": "https://github.com/afarber/PixiCompose/issues"
+  },
+  "homepage": "https://github.com/afarber/PixiCompose",
+  "keywords": [
+    "pixi",
+    "pixijs",
+    "declarative",
+    "ui",
+    "compose",
+    "swiftui",
+    "typescript",
+    "canvas",
+    "2d",
+    "graphics"
+  ],
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "npm run build && http-server . -p 8080 -o examples/basic.html",
@@ -15,12 +42,18 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "test:browser": "playwright test",
+    "test:browser:ui": "playwright test --ui",
+    "test:browser:debug": "playwright test --debug",
+    "pack:check": "npm pack --dry-run",
+    "prepublishOnly": "npm run lint && npm run typecheck && npm run build && npm test",
     "prepare": "husky"
   },
   "dependencies": {
     "pixi.js": "^8.14.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.56.1",
     "@types/jest": "^30.0.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
@@ -39,6 +72,5 @@
     "*.ts": [
       "eslint --fix"
     ]
-  },
-  "license": "MIT"
+  }
 }
