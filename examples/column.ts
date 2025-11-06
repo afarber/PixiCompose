@@ -8,12 +8,11 @@
 import * as PIXI from 'pixi.js';
 import { compose } from '../src/core/compose';
 import { h } from '../src/core/vnode';
+import { Box } from '../src/components/Box';
 import { Column } from '../src/components/Column';
 import { Row } from '../src/components/Row';
-import { Grid } from '../src/components/Grid';
 import { Text } from '../src/components/Text';
 import { Image } from '../src/components/Image';
-import { Drawer } from '../src/components/Drawer';
 
 const app = new PIXI.Application();
 await app.init({
@@ -26,43 +25,19 @@ document.body.appendChild(app.canvas);
 compose(
     () =>
         h(
-            'Box',
+            Box,
             {},
-            h(
-                Column,
-                { x: 50, y: 50, spacing: 20 },
-                h(Text, { text: 'Item 1' }),
-                h(Text, { text: 'Item 2' }),
-                h(Text, { text: 'Item 3' })
-            ),
+            h(Text, { text: 'Column Alignment Demo', x: 50, y: 30, variant: 'title' }),
             h(
                 Row,
-                { x: 300, y: 50, spacing: 15 },
-                h(Text, { text: 'A' }),
-                h(Text, { text: 'B' }),
-                h(Text, { text: 'C' })
-            ),
-            h(
-                Grid,
-                { x: 50, y: 250, columns: 3, spacing: 20 },
-                h(Text, { text: '1' }),
-                h(Text, { text: '2' }),
-                h(Text, { text: '3' }),
-                h(Text, { text: '4' }),
-                h(Text, { text: '5' }),
-                h(Text, { text: '6' })
-            ),
-            h(
-                Column,
-                { x: 500, y: 50, spacing: 40 },
-                h(Text, { text: 'Row Alignment Demo', variant: 'heading' }),
+                { x: 50, y: 100, spacing: 80 },
                 h(
                     Column,
                     { spacing: 10 },
-                    h(Text, { text: 'Align: top (default)', variant: 'caption' }),
+                    h(Text, { text: 'Align: left (default)', variant: 'caption' }),
                     h(
-                        Row,
-                        { spacing: 10, align: 'top' },
+                        Column,
+                        { spacing: 10, align: 'left' },
                         h(Image, {
                             texture: PIXI.Texture.WHITE,
                             width: 30,
@@ -71,14 +46,14 @@ compose(
                         }),
                         h(Image, {
                             texture: PIXI.Texture.WHITE,
-                            width: 30,
-                            height: 60,
+                            width: 60,
+                            height: 30,
                             style: { tint: 0x00FF00 }
                         }),
                         h(Image, {
                             texture: PIXI.Texture.WHITE,
-                            width: 30,
-                            height: 45,
+                            width: 45,
+                            height: 30,
                             style: { tint: 0x0000FF }
                         })
                     )
@@ -88,7 +63,7 @@ compose(
                     { spacing: 10 },
                     h(Text, { text: 'Align: center', variant: 'caption' }),
                     h(
-                        Row,
+                        Column,
                         { spacing: 10, align: 'center' },
                         h(Image, {
                             texture: PIXI.Texture.WHITE,
@@ -98,14 +73,14 @@ compose(
                         }),
                         h(Image, {
                             texture: PIXI.Texture.WHITE,
-                            width: 30,
-                            height: 60,
+                            width: 60,
+                            height: 30,
                             style: { tint: 0x00FF00 }
                         }),
                         h(Image, {
                             texture: PIXI.Texture.WHITE,
-                            width: 30,
-                            height: 45,
+                            width: 45,
+                            height: 30,
                             style: { tint: 0x0000FF }
                         })
                     )
@@ -113,10 +88,10 @@ compose(
                 h(
                     Column,
                     { spacing: 10 },
-                    h(Text, { text: 'Align: bottom', variant: 'caption' }),
+                    h(Text, { text: 'Align: right', variant: 'caption' }),
                     h(
-                        Row,
-                        { spacing: 10, align: 'bottom' },
+                        Column,
+                        { spacing: 10, align: 'right' },
                         h(Image, {
                             texture: PIXI.Texture.WHITE,
                             width: 30,
@@ -125,14 +100,14 @@ compose(
                         }),
                         h(Image, {
                             texture: PIXI.Texture.WHITE,
-                            width: 30,
-                            height: 60,
+                            width: 60,
+                            height: 30,
                             style: { tint: 0x00FF00 }
                         }),
                         h(Image, {
                             texture: PIXI.Texture.WHITE,
-                            width: 30,
-                            height: 45,
+                            width: 45,
+                            height: 30,
                             style: { tint: 0x0000FF }
                         })
                     )
@@ -142,27 +117,22 @@ compose(
                     { spacing: 10 },
                     h(Text, { text: 'With padding: 15', variant: 'caption' }),
                     h(
-                        Row,
+                        Column,
                         { spacing: 10, padding: 15, align: 'center' },
                         h(Image, {
                             texture: PIXI.Texture.WHITE,
-                            width: 30,
-                            height: 40,
+                            width: 40,
+                            height: 30,
                             style: { tint: 0xFFFF00 }
                         }),
                         h(Image, {
                             texture: PIXI.Texture.WHITE,
-                            width: 30,
-                            height: 40,
+                            width: 40,
+                            height: 30,
                             style: { tint: 0xFF00FF }
                         })
                     )
                 )
-            ),
-            h(
-                Drawer,
-                { side: 'left', isOpen: true },
-                h(Text, { text: 'Drawer content' })
             )
         ),
     app

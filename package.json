@@ -34,10 +34,11 @@
   "scripts": {
     "build": "tsc",
     "dev": "npm run build && http-server . -p 8080 -o examples/basic.html",
-    "dev:layout": "npm run build && http-server . -p 8080 -o examples/layout.html",
     "dev:button": "npm run build && http-server . -p 8080 -o examples/button.html",
     "dev:text": "npm run build && http-server . -p 8080 -o examples/text.html",
     "dev:image": "npm run build && http-server . -p 8080 -o examples/image.html",
+    "dev:row": "npm run build && http-server . -p 8080 -o examples/row.html",
+    "dev:column": "npm run build && http-server . -p 8080 -o examples/column.html",
     "lint": "eslint src examples",
     "lint:fix": "eslint src examples --fix",
     "typecheck": "tsc --noEmit",

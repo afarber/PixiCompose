@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixiCompose Column Example</title>
+    <script type="importmap">
+    {
+        "imports": {
+            "pixi.js": "../node_modules/pixi.js/dist/pixi.mjs"
+        }
+    }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+    <script type="module">
+        import * as PIXI from 'pixi.js';
+        import { compose } from '../dist/core/compose.js';
+        import { h } from '../dist/core/vnode.js';
+        import { Box } from '../dist/components/Box.js';
+        import { Column } from '../dist/components/Column.js';
+        import { Row } from '../dist/components/Row.js';
+        import { Text } from '../dist/components/Text.js';
+        import { Image } from '../dist/components/Image.js';
+
+        const app = new PIXI.Application();
+        await app.init({
+            resizeTo: window,
+            antialias: true,
+            hello: true
+        });
+        document.body.appendChild(app.canvas);
+
+        compose(
+            () =>
+                h(
+                    Box,
+                    {},
+                    h(Text, { text: 'Column Alignment Demo', x: 50, y: 30, variant: 'title' }),
+                    h(
+                        Row,
+                        { x: 50, y: 100, spacing: 80 },
+                        h(
+                            Column,
+                            { spacing: 10 },
+                            h(Text, { text: 'Align: left (default)', variant: 'caption' }),
+                            h(
+                                Column,
+                                { spacing: 10, align: 'left' },
+                                h(Image, {
+                                    texture: PIXI.Texture.WHITE,
+                                    width: 30,
+                                    height: 30,
+                                    style: { tint: 0xFF0000 }
+                                }),
+                                h(Image, {
+                                    texture: PIXI.Texture.WHITE,
+                                    width: 60,
+                                    height: 30,
+                                    style: { tint: 0x00FF00 }
+                                }),
+                                h(Image, {
+                                    texture: PIXI.Texture.WHITE,
+                                    width: 45,
+                                    height: 30,
+                                    style: { tint: 0x0000FF }
+                                })
+                            )
+                        ),
+                        h(
+                            Column,
+                            { spacing: 10 },
+                            h(Text, { text: 'Align: center', variant: 'caption' }),
+                            h(
+                                Column,
+                                { spacing: 10, align: 'center' },
+                                h(Image, {
+                                    texture: PIXI.Texture.WHITE,
+                                    width: 30,
+                                    height: 30,
+                                    style: { tint: 0xFF0000 }
+                                }),
+                                h(Image, {
+                                    texture: PIXI.Texture.WHITE,
+                                    width: 60,
+                                    height: 30,
+                                    style: { tint: 0x00FF00 }
+                                }),
+                                h(Image, {
+                                    texture: PIXI.Texture.WHITE,
+                                    width: 45,
+                                    height: 30,
+                                    style: { tint: 0x0000FF }
+                                })
+                            )
+                        ),
+                        h(
+                            Column,
+                            { spacing: 10 },
+                            h(Text, { text: 'Align: right', variant: 'caption' }),
+                            h(
+                                Column,
+                                { spacing: 10, align: 'right' },
+                                h(Image, {
+                                    texture: PIXI.Texture.WHITE,
+                                    width: 30,
+                                    height: 30,
+                                    style: { tint: 0xFF0000 }
+                                }),
+                                h(Image, {
+                                    texture: PIXI.Texture.WHITE,
+                                    width: 60,
+                                    height: 30,
+                                    style: { tint: 0x00FF00 }
+                                }),
+                                h(Image, {
+                                    texture: PIXI.Texture.WHITE,
+                                    width: 45,
+                                    height: 30,
+                                    style: { tint: 0x0000FF }
+                                })
+                            )
+                        ),
+                        h(
+                            Column,
+                            { spacing: 10 },
+                            h(Text, { text: 'With padding: 15', variant: 'caption' }),
+                            h(
+                                Column,
+                                { spacing: 10, padding: 15, align: 'center' },
+                                h(Image, {
+                                    texture: PIXI.Texture.WHITE,
+                                    width: 40,
+                                    height: 30,
+                                    style: { tint: 0xFFFF00 }
+                                }),
+                                h(Image, {
+                                    texture: PIXI.Texture.WHITE,
+                                    width: 40,
+                                    height: 30,
+                                    style: { tint: 0xFF00FF }
+                                })
+                            )
+                        )
+                    )
+                ),
+            app
+        );
+    </script>
+</body>
+</html>

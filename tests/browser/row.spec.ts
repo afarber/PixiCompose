@@ -7,20 +7,20 @@
 
 import { test, expect } from '@playwright/test';
 
-test.describe('Layout Example', () => {
-    test('should load and render layout example', async ({ page }) => {
-        await page.goto('/examples/layout.html');
+test.describe('Row Example', () => {
+    test('should load and render row example', async ({ page }) => {
+        await page.goto('/examples/row.html');
 
         // Wait for canvas to be present
         const canvas = page.locator('canvas');
         await expect(canvas).toBeVisible();
 
         // Check page title
-        await expect(page).toHaveTitle(/Layout/);
+        await expect(page).toHaveTitle(/Row/);
     });
 
-    test('should render layout components correctly', async ({ page }) => {
-        await page.goto('/examples/layout.html');
+    test('should render row components correctly', async ({ page }) => {
+        await page.goto('/examples/row.html');
 
         // Wait for PixiJS to initialize
         await page.waitForTimeout(1000);
@@ -36,7 +36,7 @@ test.describe('Layout Example', () => {
     });
 
     test('should handle window resize', async ({ page }) => {
-        await page.goto('/examples/layout.html');
+        await page.goto('/examples/row.html');
 
         // Wait for initial render
         await page.waitForTimeout(1000);
