@@ -9,23 +9,32 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Basic Example', () => {
     test('should load and render basic example', async ({ page }) => {
-        // Capture console errors
-        const consoleMessages: string[] = [];
+        // Capture all console messages
+        const consoleMessages: Array<{ type: string; text: string }> = [];
         page.on('console', msg => {
-            if (msg.type() === 'error') {
-                consoleMessages.push(msg.text());
-            }
+            consoleMessages.push({ type: msg.type(), text: msg.text() });
+        });
+
+        // Capture page errors
+        const pageErrors: string[] = [];
+        page.on('pageerror', error => {
+            pageErrors.push(error.message);
         });
 
         await page.goto('/examples/basic.html');
 
         // Wait for canvas to be present
         const canvas = page.locator('canvas');
-        await expect(canvas).toBeVisible();
 
-        // If canvas not visible, log console errors
-        if (consoleMessages.length > 0) {
-            console.log('Console errors:', consoleMessages);
+        try {
+            await expect(canvas).toBeVisible();
+        } catch (error) {
+            // Log all captured messages on failure
+            console.log('=== Console Messages ===');
+            consoleMessages.forEach(msg => console.log(`[${msg.type}]`, msg.text));
+            console.log('=== Page Errors ===');
+            pageErrors.forEach(err => console.log(err));
+            throw error;
         }
 
         // Check page title

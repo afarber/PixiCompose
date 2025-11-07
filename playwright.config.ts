@@ -26,10 +26,7 @@ export default defineConfig({
         },
         {
             name: 'firefox',
-            use: {
-                ...devices['Desktop Firefox'],
-                actionTimeout: 10000, // Increase from default 5000ms
-            },
+            use: { ...devices['Desktop Firefox'] },
         },
         {
             name: 'webkit',

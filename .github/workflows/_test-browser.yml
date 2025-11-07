@@ -31,7 +31,7 @@ jobs:
         run: npm run build
 
       - name: Run Playwright tests
-        run: npm run test:browser
+        run: xvfb-run --auto-servernum npm run test:browser
 
       - name: Upload test results
         if: always()
