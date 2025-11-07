@@ -74,10 +74,13 @@ function layoutList(
     const padding = props.padding ?? 0;
     const align = props.align ?? (direction === 'vertical' ? 'left' : 'top');
 
-    const renderedChildren = children.map((childVNode) => {
+    console.log(`[Layout ${direction}] spacing=${spacing}, padding=${padding}, align=${align}`);
+
+    const renderedChildren = children.map((childVNode, index) => {
         const child = render(childVNode);
-        const childWidth = (child as any)._buttonWidth ?? (child as any)._imageWidth ?? child.width ?? 0;
-        const childHeight = (child as any)._buttonHeight ?? (child as any)._imageHeight ?? child.height ?? 0;
+        const childWidth = (child as any)._buttonWidth ?? (child as any)._imageWidth ?? (child as any)._textWidth ?? child.width ?? 0;
+        const childHeight = (child as any)._buttonHeight ?? (child as any)._imageHeight ?? (child as any)._textHeight ?? child.height ?? 0;
+        console.log(`[Layout ${direction}] child ${index}: type=${child.constructor.name}, width=${childWidth}, height=${childHeight}, anchor=(${child.anchor?.x ?? 'none'}, ${child.anchor?.y ?? 'none'}), pivot=(${child.pivot?.x ?? 0}, ${child.pivot?.y ?? 0})`);
         return { child, width: childWidth, height: childHeight };
     });
 
@@ -91,29 +94,46 @@ function layoutList(
     let offset = padding;
 
     for (const { child, width, height } of renderedChildren) {
+        const anchorX = (child.anchor ? child.anchor.x : 0);
+        const anchorY = (child.anchor ? child.anchor.y : 0);
+        const pivotX = (child.pivot ? child.pivot.x : 0);
+        const pivotY = (child.pivot ? child.pivot.y : 0);
+
         if (direction === 'vertical') {
-            child.y = offset + (child.pivot ? child.pivot.y : 0);
+            // For vertical layout, position so the top edge is at offset
+            // If anchor is 0, position is at top edge, so y = offset
+            // If anchor is 0.5, position is at center, so to place top edge at offset, y = offset + height/2
+            // If anchor is 1, position is at bottom edge, so to place top edge at offset, y = offset + height
+            // General formula: y = offset + height * anchorY + pivotY
+            child.y = offset + height * anchorY + pivotY;
 
             if (align === 'left') {
-                child.x = padding + (child.pivot ? child.pivot.x : 0);
+                // Position so left edge is at padding
+                child.x = padding + width * anchorX + pivotX;
             } else if (align === 'center') {
                 child.x = padding + (maxCrossSize / 2);
             } else if (align === 'right') {
-                child.x = padding + maxCrossSize - width + (child.pivot ? child.pivot.x : 0);
+                // Position so right edge is at padding + maxCrossSize
+                child.x = padding + maxCrossSize - width * (1 - anchorX) + pivotX;
             }
 
+            console.log(`[Layout ${direction}] positioned child at (${child.x}, ${child.y}), offset was ${offset}, anchorY=${anchorY}, height=${height}`);
             offset += height + spacing;
         } else {
-            child.x = offset + (child.pivot ? child.pivot.x : 0);
+            // For horizontal layout, position so the left edge is at offset
+            child.x = offset + width * anchorX + pivotX;
 
             if (align === 'top') {
-                child.y = padding + (child.pivot ? child.pivot.y : 0);
+                // Position so top edge is at padding
+                child.y = padding + height * anchorY + pivotY;
             } else if (align === 'center') {
                 child.y = padding + (maxCrossSize / 2);
             } else if (align === 'bottom') {
-                child.y = padding + maxCrossSize - height + (child.pivot ? child.pivot.y : 0);
+                // Position so bottom edge is at padding + maxCrossSize
+                child.y = padding + maxCrossSize - height * (1 - anchorY) + pivotY;
             }
 
+            console.log(`[Layout ${direction}] positioned child at (${child.x}, ${child.y}), offset was ${offset}, anchorX=${anchorX}, width=${width}`);
             offset += width + spacing;
         }
 
@@ -130,8 +150,8 @@ function layoutGrid(children: any[], props: any) {
     const renderedChildren = children.map((childVNode) => {
         const child = render(childVNode);
         // Get logical dimensions for consistent grid cell sizing
-        const childWidth = (child as any)._buttonWidth ?? (child as any)._imageWidth ?? child.width ?? 0;
-        const childHeight = (child as any)._buttonHeight ?? (child as any)._imageHeight ?? child.height ?? 0;
+        const childWidth = (child as any)._buttonWidth ?? (child as any)._imageWidth ?? (child as any)._textWidth ?? child.width ?? 0;
+        const childHeight = (child as any)._buttonHeight ?? (child as any)._imageHeight ?? (child as any)._textHeight ?? child.height ?? 0;
         return { child, width: childWidth, height: childHeight };
     });
 
@@ -139,12 +159,16 @@ function layoutGrid(children: any[], props: any) {
     const maxWidth = Math.max(...renderedChildren.map(({ width }) => width));
     const maxHeight = Math.max(...renderedChildren.map(({ height }) => height));
 
-    renderedChildren.forEach(({ child }, i) => {
+    renderedChildren.forEach(({ child, width, height }, i) => {
         const row = Math.floor(i / columns);
         const col = i % columns;
-        // Position at cell location, adjusting for pivot if element has one
-        child.x = col * (maxWidth + spacing) + (child.pivot ? child.pivot.x : 0);
-        child.y = row * (maxHeight + spacing) + (child.pivot ? child.pivot.y : 0);
+        const anchorX = (child.anchor ? child.anchor.x : 0);
+        const anchorY = (child.anchor ? child.anchor.y : 0);
+        const pivotX = (child.pivot ? child.pivot.x : 0);
+        const pivotY = (child.pivot ? child.pivot.y : 0);
+        // Position at cell location, adjusting for anchor and pivot
+        child.x = col * (maxWidth + spacing) + width * anchorX + pivotX;
+        child.y = row * (maxHeight + spacing) + height * anchorY + pivotY;
         container.addChild(child);
     });
 
@@ -317,6 +341,9 @@ function createText(props: any) {
     const mergedStyle = { ...baseStyle, ...(props.style || {}) };
 
     const el = new PIXI.Text({ text: props.text || '', style: mergedStyle });
+
+    (el as any)._textWidth = el.width;
+    (el as any)._textHeight = el.height;
 
     return el;
 }
