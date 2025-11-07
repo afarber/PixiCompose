@@ -71,15 +71,15 @@ PixiCompose currently includes the following foundational UI components:
 
 -   **Box** – Basic layout and grouping element
 
--   **Text** – Renders text labels using Pixi's text objects. [See documentation](docs/TEXT.md)
+-   [Text](docs/TEXT.md) – Renders text labels using Pixi's text objects.
 
--   **Image** – Displays sprites and textures with flexible configuration options. [See documentation](docs/IMAGE.md)
+-   [Image](docs/IMAGE.md) – Displays sprites and textures with flexible configuration options.
 
--   **Button** – Interactive button with variants (filled, tonal), state management (normal, hovered, pressed, disabled), and customizable colors. [See documentation](docs/BUTTON.md)
+-   [Button](docs/BUTTON.md) – Interactive button with variants (filled, tonal), state management (normal, hovered, pressed, disabled), and customizable colors.
 
--   **Column** – Stacks children vertically with spacing. [See documentation](docs/COLUMN.md)
+-   [Column](docs/COLUMN.md) – Stacks children vertically with spacing.
 
--   **Row** – Aligns children horizontally with spacing. [See documentation](docs/ROW.md)
+-   [Row](docs/ROW.md) – Aligns children horizontally with spacing.
 
 -   **Grid** – Lays out children in a grid by row and column
 
