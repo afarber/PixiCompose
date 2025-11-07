@@ -76,8 +76,8 @@ function layoutList(
 
     const renderedChildren = children.map((childVNode) => {
         const child = render(childVNode);
-        const childWidth = (child as any)._buttonWidth ?? child.width ?? 0;
-        const childHeight = (child as any)._buttonHeight ?? child.height ?? 0;
+        const childWidth = (child as any)._buttonWidth ?? (child as any)._imageWidth ?? child.width ?? 0;
+        const childHeight = (child as any)._buttonHeight ?? (child as any)._imageHeight ?? child.height ?? 0;
         return { child, width: childWidth, height: childHeight };
     });
 
@@ -130,8 +130,8 @@ function layoutGrid(children: any[], props: any) {
     const renderedChildren = children.map((childVNode) => {
         const child = render(childVNode);
         // Get logical dimensions for consistent grid cell sizing
-        const childWidth = (child as any)._buttonWidth ?? child.width ?? 0;
-        const childHeight = (child as any)._buttonHeight ?? child.height ?? 0;
+        const childWidth = (child as any)._buttonWidth ?? (child as any)._imageWidth ?? child.width ?? 0;
+        const childHeight = (child as any)._buttonHeight ?? (child as any)._imageHeight ?? child.height ?? 0;
         return { child, width: childWidth, height: childHeight };
     });
 
@@ -328,7 +328,42 @@ function createImage(props: any, children: any[]) {
         return new PIXI.Container();
     }
 
-    const sprite = PIXI.Sprite.from(texture);
+    let sprite: PIXI.Sprite;
+
+    if (props.src && typeof props.src === 'string') {
+        const targetWidth = props.width || props.scaleMode ? 100 : undefined;
+        const targetHeight = props.height || props.scaleMode ? 100 : undefined;
+
+        sprite = new PIXI.Sprite(PIXI.Texture.EMPTY);
+
+        if (targetWidth) sprite.width = targetWidth;
+        if (targetHeight) sprite.height = targetHeight;
+
+        PIXI.Assets.load(props.src).then((loadedTexture) => {
+            sprite.texture = loadedTexture;
+
+            if (props.scaleMode && (props.width || props.height)) {
+                applyScaleMode(sprite, props.scaleMode, props.width, props.height);
+            } else {
+                if (props.width) sprite.width = props.width;
+                if (props.height) sprite.height = props.height;
+                if (props.scale !== undefined) {
+                    if (typeof props.scale === 'number') {
+                        sprite.scale.set(props.scale, props.scale);
+                    } else {
+                        sprite.scale.set(props.scale.x, props.scale.y);
+                    }
+                }
+            }
+
+            (sprite as any)._imageWidth = sprite.width;
+            (sprite as any)._imageHeight = sprite.height;
+        }).catch((error) => {
+            console.error('Failed to load image:', props.src, error);
+        });
+    } else {
+        sprite = PIXI.Sprite.from(texture);
+    }
 
     if (props.anchor !== undefined) {
         if (typeof props.anchor === 'number') {
@@ -340,16 +375,18 @@ function createImage(props: any, children: any[]) {
         sprite.anchor.set(0.5, 0.5);
     }
 
-    if (props.scaleMode && (props.width || props.height)) {
-        applyScaleMode(sprite, props.scaleMode, props.width, props.height);
-    } else {
-        if (props.width) sprite.width = props.width;
-        if (props.height) sprite.height = props.height;
-        if (props.scale !== undefined) {
-            if (typeof props.scale === 'number') {
-                sprite.scale.set(props.scale, props.scale);
-            } else {
-                sprite.scale.set(props.scale.x, props.scale.y);
+    if (!props.src || typeof props.src !== 'string') {
+        if (props.scaleMode && (props.width || props.height)) {
+            applyScaleMode(sprite, props.scaleMode, props.width, props.height);
+        } else {
+            if (props.width) sprite.width = props.width;
+            if (props.height) sprite.height = props.height;
+            if (props.scale !== undefined) {
+                if (typeof props.scale === 'number') {
+                    sprite.scale.set(props.scale, props.scale);
+                } else {
+                    sprite.scale.set(props.scale.x, props.scale.y);
+                }
             }
         }
     }
@@ -372,6 +409,16 @@ function createImage(props: any, children: any[]) {
     } else if (props.eventMode) {
         sprite.eventMode = props.eventMode;
         if (props.cursor) sprite.cursor = props.cursor;
+    }
+
+    if (props.src && typeof props.src === 'string') {
+        const initialWidth = props.width || (props.scaleMode ? 100 : 26);
+        const initialHeight = props.height || (props.scaleMode ? 100 : 37);
+        (sprite as any)._imageWidth = initialWidth;
+        (sprite as any)._imageHeight = initialHeight;
+    } else {
+        (sprite as any)._imageWidth = sprite.width;
+        (sprite as any)._imageHeight = sprite.height;
     }
 
     return sprite;
