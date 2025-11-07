@@ -57,34 +57,6 @@ npm run dev:layout   # Opens layout.html example in your browser
 npm run dev:button   # Opens button.html example in your browser
 ```
 
-To run linting and type checking:
-
-```bash
-npm run lint         # Check code style
-npm run lint:fix     # Auto-fix code style issues
-npm run typecheck    # Run TypeScript type checking
-```
-
-## Built-in Components
-
-PixiCompose currently includes the following foundational UI components:
-
--   **Box** – Basic layout and grouping element
-
--   [Text](docs/TEXT.md) – Renders text labels using Pixi's text objects.
-
--   [Image](docs/IMAGE.md) – Displays sprites and textures with flexible configuration options.
-
--   [Button](docs/BUTTON.md) – Interactive button with variants (filled, tonal), state management (normal, hovered, pressed, disabled), and customizable colors.
-
--   [Column](docs/COLUMN.md) – Stacks children vertically with spacing.
-
--   [Row](docs/ROW.md) – Aligns children horizontally with spacing.
-
--   **Grid** – Lays out children in a grid by row and column
-
--   **Drawer** – A side panel (left, top, right, or bottom) with a translucent backdrop
-
 ## Quick Start Example
 
 ```javascript
@@ -128,11 +100,14 @@ compose(
 
 ### Component Documentation
 
+-   **Box** – Basic layout and grouping element
 -   [Text Component](docs/TEXT.md) - Text rendering with styling options
 -   [Image Component](docs/IMAGE.md) - Sprite and texture display
 -   [Button Component](docs/BUTTON.md) - Interactive buttons with variants and states
 -   [Column Component](docs/COLUMN.md) - Vertical layout container
 -   [Row Component](docs/ROW.md) - Horizontal layout container
+-   **Grid** – Lays out children in a grid by row and column
+-   **Drawer** – A side panel (left, top, right, or bottom) with a translucent backdrop
 
 ### Development Guides
 
@@ -149,6 +124,3 @@ npm run test:browser      # Playwright browser tests (27 tests)
 npm run test:coverage     # Coverage report
 ```
 
-## License
-
-MIT - See [LICENSE](LICENSE) file for details
