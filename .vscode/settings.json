@@ -1,0 +1,69 @@
+{
+  // TypeScript/JavaScript formatting - align with Prettier config
+  "[typescript]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.rulers": [120]
+  },
+  "[javascript]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": true
+  },
+  "[jsonc]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": true
+  },
+
+  // HTML
+  "[html]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  },
+
+  // Exclude build artifacts from search and file watching
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.git": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/coverage": true
+  },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/dist/**": true,
+    "**/build/**": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true
+  },
+
+  // Trim trailing whitespace (Prettier/ESLint requirement)
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+
+  // ESLint integration
+  "eslint.validate": [
+    "javascript",
+    "typescript"
+  ],
+
+  // Prettier configuration
+  "prettier.tabWidth": 4,
+  "prettier.singleQuote": true,
+  "prettier.semi": true,
+  "prettier.endOfLine": "lf"
+}
