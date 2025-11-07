@@ -74,13 +74,10 @@ function layoutList(
     const padding = props.padding ?? 0;
     const align = props.align ?? (direction === 'vertical' ? 'left' : 'top');
 
-    console.log(`[Layout ${direction}] spacing=${spacing}, padding=${padding}, align=${align}`);
-
-    const renderedChildren = children.map((childVNode, index) => {
+    const renderedChildren = children.map((childVNode) => {
         const child = render(childVNode);
         const childWidth = (child as any)._buttonWidth ?? (child as any)._imageWidth ?? (child as any)._textWidth ?? child.width ?? 0;
         const childHeight = (child as any)._buttonHeight ?? (child as any)._imageHeight ?? (child as any)._textHeight ?? child.height ?? 0;
-        console.log(`[Layout ${direction}] child ${index}: type=${child.constructor.name}, width=${childWidth}, height=${childHeight}, anchor=(${child.anchor?.x ?? 'none'}, ${child.anchor?.y ?? 'none'}), pivot=(${child.pivot?.x ?? 0}, ${child.pivot?.y ?? 0})`);
         return { child, width: childWidth, height: childHeight };
     });
 
@@ -100,40 +97,28 @@ function layoutList(
         const pivotY = (child.pivot ? child.pivot.y : 0);
 
         if (direction === 'vertical') {
-            // For vertical layout, position so the top edge is at offset
-            // If anchor is 0, position is at top edge, so y = offset
-            // If anchor is 0.5, position is at center, so to place top edge at offset, y = offset + height/2
-            // If anchor is 1, position is at bottom edge, so to place top edge at offset, y = offset + height
-            // General formula: y = offset + height * anchorY + pivotY
             child.y = offset + height * anchorY + pivotY;
 
             if (align === 'left') {
-                // Position so left edge is at padding
                 child.x = padding + width * anchorX + pivotX;
             } else if (align === 'center') {
                 child.x = padding + (maxCrossSize / 2);
             } else if (align === 'right') {
-                // Position so right edge is at padding + maxCrossSize
                 child.x = padding + maxCrossSize - width * (1 - anchorX) + pivotX;
             }
 
-            console.log(`[Layout ${direction}] positioned child at (${child.x}, ${child.y}), offset was ${offset}, anchorY=${anchorY}, height=${height}`);
             offset += height + spacing;
         } else {
-            // For horizontal layout, position so the left edge is at offset
             child.x = offset + width * anchorX + pivotX;
 
             if (align === 'top') {
-                // Position so top edge is at padding
                 child.y = padding + height * anchorY + pivotY;
             } else if (align === 'center') {
                 child.y = padding + (maxCrossSize / 2);
             } else if (align === 'bottom') {
-                // Position so bottom edge is at padding + maxCrossSize
                 child.y = padding + maxCrossSize - height * (1 - anchorY) + pivotY;
             }
 
-            console.log(`[Layout ${direction}] positioned child at (${child.x}, ${child.y}), offset was ${offset}, anchorX=${anchorX}, width=${width}`);
             offset += width + spacing;
         }
 
