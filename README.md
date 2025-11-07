@@ -100,14 +100,14 @@ compose(
 
 ### Component Documentation
 
--   **Box** – Basic layout and grouping element
+-   **Box Component** – Basic layout and grouping element
 -   [Text Component](docs/TEXT.md) - Text rendering with styling options
 -   [Image Component](docs/IMAGE.md) - Sprite and texture display
 -   [Button Component](docs/BUTTON.md) - Interactive buttons with variants and states
 -   [Column Component](docs/COLUMN.md) - Vertical layout container
 -   [Row Component](docs/ROW.md) - Horizontal layout container
--   **Grid** – Lays out children in a grid by row and column
--   **Drawer** – A side panel (left, top, right, or bottom) with a translucent backdrop
+-   **Grid Component** – Lays out children in a grid by row and column
+-   **Drawer Component** – A side panel (left, top, right, or bottom) with a translucent backdrop
 
 ### Development Guides
 
@@ -115,12 +115,4 @@ compose(
 -   [Contributing Guide](docs/CONTRIBUTING.md) - How to contribute to PixiCompose
 -   [Publishing Guide](docs/PUBLISHING.md) - How to publish releases (maintainers)
 -   [GitHub Workflows](docs/GITHUB_WORKFLOWS.md) - CI/CD pipeline documentation
-
-## Testing
-
-```bash
-npm test                  # Jest unit tests (24 tests)
-npm run test:browser      # Playwright browser tests (27 tests)
-npm run test:coverage     # Coverage report
-```
 
